@@ -29,8 +29,8 @@ async def generate_thumbnail(prompt:str, style_prompt:str, headshot_url: str)->b
         tools=[
             {"type":"image_generation",
             "name":"gpt-image-2",
-            "size":"1536*1024",
-            "quality":"standard",
+            "size":"1024x1536",
+            "quality":"medium",
             "output_format":"png"
             }
         ]
@@ -39,5 +39,5 @@ async def generate_thumbnail(prompt:str, style_prompt:str, headshot_url: str)->b
         if item.type =="image_generation_call" and item.result:
             return base64.b64decode(item.result)
     raise RuntimeError("No image generation result found in the response")
-    
+
     
