@@ -17,6 +17,7 @@ class Thumbnail(SQLModel, table=True):
     status: str = Field(default="pending")
     error_message:Optional[str] =Field(default=None)
     created_at: datetime = Field(default_factory=_now)
+    imagekit_url: Optional[str] = Field(default=None)
 
     job: Optional["Job"] = Relationship(back_populates="thumbnails")
 
