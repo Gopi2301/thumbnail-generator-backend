@@ -37,6 +37,7 @@ class ThumbnailResponse(BaseModel):
 class JobResponse(BaseModel):
     id: str
     prompt: str
+    status: str
     num_thumbnails: int
     headshot_url: str
     thumbnails: list[ThumbnailResponse]

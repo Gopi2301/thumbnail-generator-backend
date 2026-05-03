@@ -16,7 +16,7 @@ async def generate_thumbnail(prompt:str, style_prompt:str, headshot_url: str)->b
         "shown in the provided reference headshot photo. Keep their likeness accurate"
     )
     response = await client.responses.create(
-        model="gpt-4o",
+        model="gpt-4o-mini",
         input=[
             {
                 "role":"user",

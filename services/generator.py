@@ -4,7 +4,7 @@ import logging
 from sqlmodel import Session, select
 from database import engine
 from model import Job, Thumbnail
-from services.openai_service import generate_thumbnail
+from services.gemini_service import generate_thumbnail
 from services.imagekit_service import upload_file
 
 logger = logging.getLogger(__name__)
@@ -60,11 +60,16 @@ async def generate_single_thumbnail(thumbnail_id: int, prompt: str, headshot_url
         # DB call save the url +mark uploaded
         with Session(engine) as session:
             thumb = session.get(Thumbnail, thumbnail_id)
-            thumb.imagekit_url = url
-            thumb.status = "uploaded"
+            if url:
+                thumb.imagekit_url = url
+                thumb.status = "uploaded"
+                logger.info(f"Thumbnail {thumbnail_id} generated and uploaded successfully")
+            else:
+                thumb.status = "failed"
+                thumb.error_message = "ImageKit upload returned None"
+                logger.error(f"Thumbnail {thumbnail_id} upload failed: upload_file returned None")
             session.add(thumb)
             session.commit()
-        logger.info(f"Thumbnail {thumbnail_id} generated and uploaded successfully")
     
     except Exception as e:
         logger.error(f"Failed to generate thumbnail {thumbnail_id}: {str(e)}")
