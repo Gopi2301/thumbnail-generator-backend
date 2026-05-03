@@ -21,14 +21,14 @@ async def generate_thumbnail(prompt:str, style_prompt:str, headshot_url: str)->b
             {
                 "role":"user",
                 "content":[
-                    {"type":"input_image","url":headshot_url},
-                    {"type":"text","text":full_prompt}
+                    {"type":"input_image","image_url":headshot_url},
+                    {"type":"input_text","text":full_prompt}
                 ]
             }
         ],
         tools=[
             {"type":"image_generation",
-            "name":"gpt-image-2",
+            "model":"gpt-image-2",
             "size":"1024x1536",
             "quality":"medium",
             "output_format":"png"
